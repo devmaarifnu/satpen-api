@@ -1,0 +1,974 @@
+{
+	"info": {
+		"_postman_id": "satpen-api-collection",
+		"name": "Satpen API - LP Ma'arif NU",
+		"description": "Complete API collection for Satuan Pendidikan Ma'arif NU API\n\n## Base URL\n- Development: http://localhost:8080\n- Production: https://api.lpmaarifnu.or.id\n\n## Features\n- Get all satuan pendidikan with filtering & pagination\n- Get single satuan pendidikan by ID or NPSN\n- Get statistics\n- Master data: Provinsi, Kabupaten, Pengurus Cabang, Jenjang Pendidikan\n- Health check\n\n## Endpoints Summary\n### Satuan Pendidikan\n- GET /api/v1/satpen - List all satpen\n- GET /api/v1/satpen/:id - Get satpen by ID/NPSN\n- GET /api/v1/satpen/statistics - Get statistics\n\n### Master Data\n- GET /api/v1/provinsi - List all provinsi\n- GET /api/v1/provinsi/:id - Get provinsi by ID\n- GET /api/v1/kabupaten - List all kabupaten\n- GET /api/v1/kabupaten/:id - Get kabupaten by ID\n- GET /api/v1/pengurus-cabang - List all pengurus cabang\n- GET /api/v1/pengurus-cabang/:id - Get pengurus cabang by ID\n- GET /api/v1/jenjang-pendidikan - List all jenjang pendidikan\n- GET /api/v1/jenjang-pendidikan/:id - Get jenjang pendidikan by ID\n\n## Version\n1.0.0",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Health Check",
+			"item": [
+				{
+					"name": "Health Check",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/health",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"health"
+							]
+						},
+						"description": "Check API health status and database connection"
+					},
+					"response": []
+				}
+			],
+			"description": "Health check endpoints"
+		},
+		{
+			"name": "Satuan Pendidikan",
+			"item": [
+				{
+					"name": "Get All Satpen",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/v1/satpen?page=1&limit=20",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"satpen"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1",
+									"description": "Page number (default: 1)"
+								},
+								{
+									"key": "limit",
+									"value": "20",
+									"description": "Items per page (default: 20, max: 100)"
+								},
+								{
+									"key": "jenjang",
+									"value": "MI",
+									"description": "Filter by jenjang (MI, MTs, MA, PAUD, RA, etc)",
+									"disabled": true
+								},
+								{
+									"key": "provinsi",
+									"value": "Jawa Barat",
+									"description": "Filter by provinsi name or ID",
+									"disabled": true
+								},
+								{
+									"key": "kabupaten",
+									"value": "",
+									"description": "Filter by kabupaten name or ID",
+									"disabled": true
+								},
+								{
+									"key": "search",
+									"value": "",
+									"description": "Search by nama or alamat",
+									"disabled": true
+								},
+								{
+									"key": "akreditasi",
+									"value": "",
+									"description": "Filter by akreditasi (A, B, C, D)",
+									"disabled": true
+								},
+								{
+									"key": "status",
+									"value": "aktif",
+									"description": "Filter by status (aktif, non-aktif)",
+									"disabled": true
+								},
+								{
+									"key": "verified",
+									"value": "",
+									"description": "Filter by verified status (true/false)",
+									"disabled": true
+								},
+								{
+									"key": "sort",
+									"value": "",
+									"description": "Sort field (prefix with - for descending)",
+									"disabled": true
+								}
+							]
+						},
+						"description": "Get list of satuan pendidikan with filtering, pagination, and sorting"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Satpen by ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/v1/satpen/1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"satpen",
+								"1"
+							]
+						},
+						"description": "Get single satuan pendidikan by ID"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Satpen by NPSN",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/v1/satpen/69737129",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"satpen",
+								"69737129"
+							]
+						},
+						"description": "Get single satuan pendidikan by NPSN"
+					},
+					"response": []
+				},
+				{
+					"name": "Filter by Jenjang MI",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/v1/satpen?jenjang=MI&page=1&limit=10",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"satpen"
+							],
+							"query": [
+								{
+									"key": "jenjang",
+									"value": "MI"
+								},
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "limit",
+									"value": "10"
+								}
+							]
+						},
+						"description": "Filter satuan pendidikan by jenjang MI"
+					},
+					"response": []
+				},
+				{
+					"name": "Filter by Provinsi",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/v1/satpen?provinsi=Jawa Barat&page=1&limit=10",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"satpen"
+							],
+							"query": [
+								{
+									"key": "provinsi",
+									"value": "Jawa Barat"
+								},
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "limit",
+									"value": "10"
+								}
+							]
+						},
+						"description": "Filter satuan pendidikan by provinsi"
+					},
+					"response": []
+				},
+				{
+					"name": "Search by Name",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/v1/satpen?search=Ma'arif&page=1&limit=10",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"satpen"
+							],
+							"query": [
+								{
+									"key": "search",
+									"value": "Ma'arif"
+								},
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "limit",
+									"value": "10"
+								}
+							]
+						},
+						"description": "Search satuan pendidikan by name or address"
+					},
+					"response": []
+				},
+				{
+					"name": "Filter by Akreditasi A",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/v1/satpen?akreditasi=A&page=1&limit=10",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"satpen"
+							],
+							"query": [
+								{
+									"key": "akreditasi",
+									"value": "A"
+								},
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "limit",
+									"value": "10"
+								}
+							]
+						},
+						"description": "Filter satuan pendidikan by akreditasi A"
+					},
+					"response": []
+				},
+				{
+					"name": "Sort by Name Ascending",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/v1/satpen?sort=nama&page=1&limit=10",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"satpen"
+							],
+							"query": [
+								{
+									"key": "sort",
+									"value": "nama"
+								},
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "limit",
+									"value": "10"
+								}
+							]
+						},
+						"description": "Sort satuan pendidikan by name (ascending)"
+					},
+					"response": []
+				},
+				{
+					"name": "Sort by Jumlah Siswa Descending",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/v1/satpen?sort=-jumlah_siswa&page=1&limit=10",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"satpen"
+							],
+							"query": [
+								{
+									"key": "sort",
+									"value": "-jumlah_siswa"
+								},
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "limit",
+									"value": "10"
+								}
+							]
+						},
+						"description": "Sort satuan pendidikan by jumlah siswa (descending)"
+					},
+					"response": []
+				},
+				{
+					"name": "Multiple Filters Combined",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/v1/satpen?jenjang=MI&provinsi=Jawa Barat&akreditasi=A&status=aktif&page=1&limit=10&sort=-tahun_berdiri",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"satpen"
+							],
+							"query": [
+								{
+									"key": "jenjang",
+									"value": "MI"
+								},
+								{
+									"key": "provinsi",
+									"value": "Jawa Barat"
+								},
+								{
+									"key": "akreditasi",
+									"value": "A"
+								},
+								{
+									"key": "status",
+									"value": "aktif"
+								},
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "limit",
+									"value": "10"
+								},
+								{
+									"key": "sort",
+									"value": "-tahun_berdiri"
+								}
+							]
+						},
+						"description": "Get MI schools in Jawa Barat with akreditasi A, sorted by tahun berdiri"
+					},
+					"response": []
+				}
+			],
+			"description": "Satuan Pendidikan endpoints"
+		},
+		{
+			"name": "Master Data - Provinsi",
+			"item": [
+				{
+					"name": "Get All Provinsi",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/v1/provinsi",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"provinsi"
+							]
+						},
+						"description": "Get list of all provinsi"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Provinsi by ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/v1/provinsi/1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"provinsi",
+								"1"
+							]
+						},
+						"description": "Get single provinsi by ID"
+					},
+					"response": []
+				},
+				{
+					"name": "Search Provinsi",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/v1/provinsi?search=Jawa",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"provinsi"
+							],
+							"query": [
+								{
+									"key": "search",
+									"value": "Jawa",
+									"description": "Search by nama provinsi"
+								}
+							]
+						},
+						"description": "Search provinsi by name"
+					},
+					"response": []
+				}
+			],
+			"description": "Provinsi master data endpoints"
+		},
+		{
+			"name": "Master Data - Kabupaten",
+			"item": [
+				{
+					"name": "Get All Kabupaten",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/v1/kabupaten",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"kabupaten"
+							]
+						},
+						"description": "Get list of all kabupaten/kota"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Kabupaten by ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/v1/kabupaten/1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"kabupaten",
+								"1"
+							]
+						},
+						"description": "Get single kabupaten by ID"
+					},
+					"response": []
+				},
+				{
+					"name": "Filter Kabupaten by Provinsi",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/v1/kabupaten?provinsi_id=1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"kabupaten"
+							],
+							"query": [
+								{
+									"key": "provinsi_id",
+									"value": "1",
+									"description": "Filter by provinsi ID"
+								}
+							]
+						},
+						"description": "Get kabupaten filtered by provinsi"
+					},
+					"response": []
+				},
+				{
+					"name": "Search Kabupaten",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/v1/kabupaten?search=Bandung",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"kabupaten"
+							],
+							"query": [
+								{
+									"key": "search",
+									"value": "Bandung",
+									"description": "Search by nama kabupaten"
+								}
+							]
+						},
+						"description": "Search kabupaten by name"
+					},
+					"response": []
+				},
+				{
+					"name": "Filter & Search Kabupaten",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/v1/kabupaten?provinsi_id=32&search=Bandung",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"kabupaten"
+							],
+							"query": [
+								{
+									"key": "provinsi_id",
+									"value": "32",
+									"description": "Filter by provinsi ID"
+								},
+								{
+									"key": "search",
+									"value": "Bandung",
+									"description": "Search by nama kabupaten"
+								}
+							]
+						},
+						"description": "Get kabupaten with filter and search combined"
+					},
+					"response": []
+				}
+			],
+			"description": "Kabupaten/Kota master data endpoints"
+		},
+		{
+			"name": "Master Data - Pengurus Cabang",
+			"item": [
+				{
+					"name": "Get All Pengurus Cabang",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/v1/pengurus-cabang?page=1&limit=20",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"pengurus-cabang"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1",
+									"description": "Page number (default: 1)"
+								},
+								{
+									"key": "limit",
+									"value": "20",
+									"description": "Items per page (default: 20, max: 100)"
+								}
+							]
+						},
+						"description": "Get list of all pengurus cabang with pagination"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Pengurus Cabang by ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/v1/pengurus-cabang/1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"pengurus-cabang",
+								"1"
+							]
+						},
+						"description": "Get single pengurus cabang by ID"
+					},
+					"response": []
+				},
+				{
+					"name": "Filter Pengurus Cabang by Provinsi",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/v1/pengurus-cabang?provinsi_id=1&page=1&limit=10",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"pengurus-cabang"
+							],
+							"query": [
+								{
+									"key": "provinsi_id",
+									"value": "1",
+									"description": "Filter by provinsi ID"
+								},
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "limit",
+									"value": "10"
+								}
+							]
+						},
+						"description": "Get pengurus cabang filtered by provinsi"
+					},
+					"response": []
+				},
+				{
+					"name": "Search Pengurus Cabang",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/v1/pengurus-cabang?search=Jakarta&page=1&limit=10",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"pengurus-cabang"
+							],
+							"query": [
+								{
+									"key": "search",
+									"value": "Jakarta",
+									"description": "Search by nama cabang"
+								},
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "limit",
+									"value": "10"
+								}
+							]
+						},
+						"description": "Search pengurus cabang by name"
+					},
+					"response": []
+				},
+				{
+					"name": "Filter & Search Pengurus Cabang",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/v1/pengurus-cabang?provinsi_id=32&search=Bandung&page=1&limit=10",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"pengurus-cabang"
+							],
+							"query": [
+								{
+									"key": "provinsi_id",
+									"value": "32",
+									"description": "Filter by provinsi ID"
+								},
+								{
+									"key": "search",
+									"value": "Bandung",
+									"description": "Search by nama cabang"
+								},
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "limit",
+									"value": "10"
+								}
+							]
+						},
+						"description": "Get pengurus cabang with filter and search combined"
+					},
+					"response": []
+				}
+			],
+			"description": "Pengurus Cabang master data endpoints"
+		},
+		{
+			"name": "Master Data - Jenjang Pendidikan",
+			"item": [
+				{
+					"name": "Get All Jenjang Pendidikan",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/v1/jenjang-pendidikan",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"jenjang-pendidikan"
+							]
+						},
+						"description": "Get list of all jenjang pendidikan"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Jenjang Pendidikan by ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/v1/jenjang-pendidikan/1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"jenjang-pendidikan",
+								"1"
+							]
+						},
+						"description": "Get single jenjang pendidikan by ID"
+					},
+					"response": []
+				},
+				{
+					"name": "Search Jenjang Pendidikan",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/v1/jenjang-pendidikan?search=MI",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"jenjang-pendidikan"
+							],
+							"query": [
+								{
+									"key": "search",
+									"value": "MI",
+									"description": "Search by nama jenjang"
+								}
+							]
+						},
+						"description": "Search jenjang pendidikan by name"
+					},
+					"response": []
+				}
+			],
+			"description": "Jenjang Pendidikan master data endpoints"
+		},
+		{
+			"name": "Statistics",
+			"item": [
+				{
+					"name": "Get All Statistics",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/v1/satpen/statistics",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"satpen",
+								"statistics"
+							]
+						},
+						"description": "Get complete statistics of all satuan pendidikan"
+					},
+					"response": []
+				},
+				{
+					"name": "Statistics by Provinsi",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/v1/satpen/statistics?provinsi=Jawa Barat",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"satpen",
+								"statistics"
+							],
+							"query": [
+								{
+									"key": "provinsi",
+									"value": "Jawa Barat"
+								}
+							]
+						},
+						"description": "Get statistics filtered by provinsi"
+					},
+					"response": []
+				},
+				{
+					"name": "Statistics by Jenjang",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/v1/satpen/statistics?jenjang=MI",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"satpen",
+								"statistics"
+							],
+							"query": [
+								{
+									"key": "jenjang",
+									"value": "MI"
+								}
+							]
+						},
+						"description": "Get statistics filtered by jenjang"
+					},
+					"response": []
+				}
+			],
+			"description": "Statistics endpoints"
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "base_url",
+			"value": "http://localhost:8080",
+			"type": "string"
+		}
+	]
+}
