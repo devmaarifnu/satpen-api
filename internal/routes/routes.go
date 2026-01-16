@@ -18,7 +18,7 @@ func SetupRoutes(
 	healthHandler *handler.HealthHandler,
 ) {
 	// Middleware
-	r.Use(middleware.CORS(cfg))
+	// r.Use(middleware.CORS(cfg))
 	r.Use(middleware.Logger(log))
 	r.Use(gin.Recovery())
 
