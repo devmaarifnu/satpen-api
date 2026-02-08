@@ -11,7 +11,7 @@ import (
 )
 
 type SatpenService interface {
-	GetAllSatpen(filters map[string]interface{}, page, limit int, sort string) ([]models.Satpen, *PaginationMeta, *models.SatpenStatistics, error)
+	GetAllSatpen(filters map[string]interface{}, page, limit int, sort string, includeStats bool) ([]models.Satpen, *PaginationMeta, *models.SatpenStatistics, error)
 	GetSatpenByID(id string) (*models.Satpen, error)
 	GetStatistics(filters map[string]interface{}) (*models.SatpenStatistics, error)
 }
@@ -37,7 +37,7 @@ func NewSatpenService(repo repository.SatpenRepository, cfg *config.Config) Satp
 	}
 }
 
-func (s *satpenService) GetAllSatpen(filters map[string]interface{}, page, limit int, sort string) ([]models.Satpen, *PaginationMeta, *models.SatpenStatistics, error) {
+func (s *satpenService) GetAllSatpen(filters map[string]interface{}, page, limit int, sort string, includeStats bool) ([]models.Satpen, *PaginationMeta, *models.SatpenStatistics, error) {
 	// Validate and set defaults for pagination
 	if page < 1 {
 		page = s.cfg.Pagination.DefaultPage
@@ -70,10 +70,13 @@ func (s *satpenService) GetAllSatpen(filters map[string]interface{}, page, limit
 		HasPrev:      page > 1,
 	}
 
-	// Get statistics
-	stats, err := s.repo.GetStatistics(filters)
-	if err != nil {
-		return nil, nil, nil, err
+	// Get statistics only if requested (performance optimization)
+	var stats *models.SatpenStatistics
+	if includeStats {
+		stats, err = s.repo.GetStatistics(filters)
+		if err != nil {
+			return nil, nil, nil, err
+		}
 	}
 
 	return satpen, pagination, stats, nil

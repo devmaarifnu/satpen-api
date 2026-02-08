@@ -61,19 +61,27 @@ func (h *SatpenHandler) GetAllSatpen(c *gin.Context) {
 	// Parse sort
 	sort := c.DefaultQuery("sort", "-created_at")
 
+	// Check if statistics are needed (skip by default for performance)
+	includeStats := c.Query("include_stats") == "true"
+
 	// Get data from service
-	satpen, pagination, stats, err := h.service.GetAllSatpen(filters, page, limit, sort)
+	satpen, pagination, stats, err := h.service.GetAllSatpen(filters, page, limit, sort, includeStats)
 	if err != nil {
 		utils.InternalErrorResponse(c, err)
 		return
 	}
 
 	// Response
-	utils.SuccessResponse(c, http.StatusOK, "Satuan pendidikan retrieved successfully", gin.H{
+	responseData := gin.H{
 		"satpen":     satpen,
 		"pagination": pagination,
-		"statistics": stats,
-	})
+	}
+
+	if includeStats && stats != nil {
+		responseData["statistics"] = stats
+	}
+
+	utils.SuccessResponse(c, http.StatusOK, "Satuan pendidikan retrieved successfully", responseData)
 }
 
 // GetSatpenByID handles GET /api/v1/satpen/:id

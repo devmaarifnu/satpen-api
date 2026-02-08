@@ -22,8 +22,7 @@ func SetupRoutes(
 	r.Use(middleware.Logger(log))
 	r.Use(gin.Recovery())
 
-	// Start cleanup routine for rate limiter
-	middleware.CleanupVisitors(5 * 60) // 5 minutes
+	// Note: Rate limiter cleanup is started in main.go to prevent goroutine leaks
 
 	// Health check
 	if cfg.Monitoring.Enabled {
