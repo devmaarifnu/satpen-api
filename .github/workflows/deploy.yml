@@ -20,7 +20,7 @@ jobs:
 
       - name: Build Binary
         run: |
-          GOOS=linux GOARCH=amd64 go build -o app
+          OOS=linux GOARCH=amd64 go build -o app ./cmd/api
 
       - name: Upload Binary to Server
         uses: appleboy/scp-action@master
