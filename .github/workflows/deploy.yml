@@ -20,7 +20,7 @@ jobs:
 
       - name: Build Binary
         run: |
-          OOS=linux GOARCH=amd64 go build -o satpen-api ./cmd/api
+          GOOS=linux GOARCH=amd64 go build -o satpen-api ./cmd/api
 
       - name: Upload Binary to Server
         uses: appleboy/scp-action@master
@@ -30,6 +30,8 @@ jobs:
           key: ${{ secrets.SERVER_SSH_KEY }}
           source: "satpen-api"
           target: "/var/opt/satpen-api"
+          rm: true
+          overwrite: true
 
       - name: Restart Service
         uses: appleboy/ssh-action@master
@@ -39,4 +41,5 @@ jobs:
           key: ${{ secrets.SERVER_SSH_KEY }}
           script: |
             cd /var/opt/satpen-api
+            chmod +x satpen-api
             ./launch.sh restart
