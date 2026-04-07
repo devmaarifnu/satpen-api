@@ -11,7 +11,7 @@ database:
   port: 3306
   username: "root"
   password: ""
-  database: "testing_lpmaarif1"
+  database: "siap_lpmaarif"
   charset: "utf8mb4"
   parse_time: true
   max_idle_conns: 10
