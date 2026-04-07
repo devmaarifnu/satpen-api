@@ -259,7 +259,7 @@ func (r *satpenRepository) applyFilters(query *gorm.DB, filters map[string]inter
 		}
 	} else {
 		// Default: only show approved (aktif)
-		query = query.Where("satpen.status = ?", "setujui")
+		query = query.Where("satpen.status IN (?)", []string{"setujui", "expired", "perpanjangan"})
 	}
 
 	// Filter by verified

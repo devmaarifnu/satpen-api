@@ -39,7 +39,7 @@ jobs:
           key: ${{ secrets.SERVER_SSH_KEY }}
           script: |
             cd /var/opt/satpen-api
-            ./launch.sh stop
+            sudo ./launch.sh stop
             sudo mv /tmp/satpen-api /var/opt/satpen-api/satpen-api
-            chmod +x satpen-api
-            ./launch.sh start
+            sudo chmod +x satpen-api
+            sudo ./launch.sh start
