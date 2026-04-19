@@ -37,6 +37,7 @@ func SetupRoutes(
 		{
 			satpen.GET("", middleware.RateLimit(cfg, cfg.RateLimit.Satpen), satpenHandler.GetAllSatpen)
 			satpen.GET("/statistics", middleware.RateLimit(cfg, cfg.RateLimit.Statistics), satpenHandler.GetStatistics)
+			satpen.GET("/export", middleware.RateLimit(cfg, cfg.RateLimit.Satpen), satpenHandler.DownloadExcel)
 			satpen.GET("/:id", middleware.RateLimit(cfg, cfg.RateLimit.Satpen), satpenHandler.GetSatpenByID)
 		}
 
