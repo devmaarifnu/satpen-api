@@ -9,6 +9,7 @@ import (
 
 type SatpenRepository interface {
 	FindAll(filters map[string]interface{}, page, limit int, sort string) ([]models.Satpen, int64, error)
+	FindAllForExport(filters map[string]interface{}, sort string) ([]models.Satpen, error)
 	FindByID(id uint) (*models.Satpen, error)
 	FindByNPSN(npsn string) (*models.Satpen, error)
 	GetStatistics(filters map[string]interface{}) (*models.SatpenStatistics, error)
@@ -70,6 +71,36 @@ func (r *satpenRepository) FindAll(filters map[string]interface{}, page, limit i
 
 	err := query.Find(&satpen).Error
 	return satpen, total, err
+}
+
+func (r *satpenRepository) FindAllForExport(filters map[string]interface{}, sort string) ([]models.Satpen, error) {
+	var satpen []models.Satpen
+
+	query := r.db.Model(&models.Satpen{}).
+		Preload("Provinsi").
+		Preload("Kabupaten").
+		Preload("Jenjang").
+		Preload("Kategori").
+		Preload("PengurusCabang").
+		Preload("PDPTK", func(db *gorm.DB) *gorm.DB {
+			return db.Order("tapel DESC").Limit(1)
+		})
+
+	query = r.applyFilters(query, filters)
+
+	if sort != "" {
+		if strings.HasPrefix(sort, "-") {
+			sortField := r.mapSortField(strings.TrimPrefix(sort, "-"))
+			query = query.Order(sortField + " DESC")
+		} else {
+			query = query.Order(r.mapSortField(sort) + " ASC")
+		}
+	} else {
+		query = query.Order("satpen.created_at DESC")
+	}
+
+	err := query.Find(&satpen).Error
+	return satpen, err
 }
 
 func (r *satpenRepository) FindByID(id uint) (*models.Satpen, error) {
